@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Placed' if placed else 'Not placed' }} - Placement Predictor{% endblock %}
+
+{% block content %}
+<section class="verdict {{ 'good' if placed else 'bad' }}">
+  <p class="verdict-label">Prediction</p>
+  <h1>{{ 'Placed' if placed else 'Not placed' }}</h1>
+  <p class="verdict-text">
+    Estimated chance of placement: <strong>{{ percent }}%</strong>
+  </p>
+
+  <div class="meter" role="img" aria-label="Placement chance {{ percent }} percent">
+    <div class="meter-fill"></div>
+
+    <div class="meter-mark"></div>
+  </div>
+  <div class="meter-scale">
+    <span>0%</span>
+    <span>50% decides the result</span>
+    <span>100%</span>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Details you entered</h2>
+  <dl class="summary">
+    <p>{{ user_name }}</p><br />
+    {% for label, value in summary.items() %}
+    {% if label != 'name' %}
+        <dt>{{ label }}</dt>
+        <dd>{{ value }}</dd>
+    {% endif %}
+    {% endfor %}
+  </dl>
+</section>
+
+<a class="btn btn-secondary" href="{{ url_for('home') }}">Check another student</a>
+{% endblock %}

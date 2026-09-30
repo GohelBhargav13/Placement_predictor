@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Will you get placed?</h1>
+<p class="lead">Enter your details below and the model will estimate your chance of placement.</p>
+
+{% if errors %}
+<p class="notice" role="alert">Please fix the highlighted fields and try again.</p>
+{% endif %}
+
+<form class="card" action="{{ url_for('predict') }}" method="post" novalidate>
+  <div class="fields">
+
+    <div class="field">
+      <label for="name">NAME</label>
+      <input id="name" name="name" type="name" inputmode="latin-name"
+              placeholder="e.g. Alice"
+             value="" required>
+      {% if errors and errors.name %}
+        <p class="error">{{ errors.name }}</p>
+      {%endif%}
+      <span class="hint">Alice Doe</span>
+  
+    </div>
+
+    <div class="field">
+      <label for="cgpa">CGPA</label>
+      <input id="cgpa" name="cgpa" type="number" inputmode="decimal"
+             step="0.01" min="0" max="10" placeholder="e.g. 7.8"
+             value="" required>
+      {% if errors and errors.cgpa %}
+        <p class="error">{{ errors.cgpa }}</p>
+      {%endif%}
+      <span class="hint">Out of 10</span>
+  
+    </div>
+
+    <div class="field">
+      <label for="internships">Internships</label>
+      <select id="internships" name="internships" required>
+        {% for value, text in [("0", "None"), ("1", "1 internship"), ("2", "2 or more")] %}
+        <option value="{{ value }}">{{ text }}</option>
+        {% endfor %}
+      </select>
+     {% if errors and errors.internships %}
+        <p class="error">{{ errors.internships }}</p>
+      {%endif%}
+    </div>
+
+
+    <div class="field">
+      <label for="projects">Projects completed</label>
+      <input id="projects" name="projects" type="number" inputmode="numeric"
+             step="1" min="0" max="20" placeholder="e.g. 3"
+             value="" required>
+      {% if errors and errors.projects %}
+        <p class="error">{{ errors.projects }}</p>
+      {%endif%}
+      <span class="hint">Academic and personal projects</span>
+      
+
+    <div class="field">
+      <label for="backlogs">Active backlogs</label>
+      <input id="backlogs" name="backlogs" type="number" inputmode="numeric"
+             step="1" min="0" max="20" placeholder="e.g. 0"
+             value="" required>
+      {% if errors and errors.backlogs %}
+        <p class="error">{{ errors.backlogs }}</p>
+      {%endif%}
+      <span class="hint">Enter 0 if none</span>
+     
+    </div>
+
+    <div class="field wide">
+      <label for="skills">Technical skills or certifications</label>
+      <input id="skills" name="skills" type="number" inputmode="numeric"
+             step="1" min="0" max="20" placeholder="e.g. 4"
+             value="" required>
+      {% if errors and errors.skills %}
+        <p class="error">{{ errors.skills }}</p>
+      {%endif%}
+      <span class="hint">Count languages, frameworks, tools and certificates together</span>
+    </div>
+
+  </div>
+
+  <button class="btn" type="submit">Predict placement</button>
+</form>
+{% endblock %}
