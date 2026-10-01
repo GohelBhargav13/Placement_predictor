@@ -8,11 +8,11 @@
   <h1>{{ 'Placed' if placed else 'Not placed' }}</h1>
   <p class="verdict-text">
     Estimated chance of placement: <strong>{{ percent }}%</strong>
+    <span class="band band-{{ band_class }}">{{ band }} chance</span>
   </p>
 
   <div class="meter" role="img" aria-label="Placement chance {{ percent }} percent">
-    <div class="meter-fill"></div>
-
+    <div class="meter-fill" style="width: percent"></div>
     <div class="meter-mark"></div>
   </div>
   <div class="meter-scale">
@@ -20,16 +20,29 @@
     <span>50% decides the result</span>
     <span>100%</span>
   </div>
+  <p class="band-note">High: 70% or more. Medium: 40% to 70%. Low: below 40%.</p>
+</section>
+
+<section class="card">
+  <h2>Why this result?</h2>
+  <p class="hint">Compared with an average student. Green bars pushed your chance up, red bars pulled it down.</p>
+  <div class="chart-box"><canvas id="effectsChart"></canvas></div>
+</section>
+
+<section class="card">
+  <h2>What could change it?</h2>
+  <p class="hint">Your estimated chance of placement if one thing improved.</p>
+  <div class="chart-box"><canvas id="whatIfChart"></canvas></div>
 </section>
 
 <section class="card">
   <h2>Details you entered</h2>
   <dl class="summary">
-    <p>{{ user_name }}</p><br />
+    <p>{{ user_name }}</p>
     {% for label, value in summary.items() %}
-    {% if label != 'name' %}
-        <dt>{{ label }}</dt>
-        <dd>{{ value }}</dd>
+    {% if label != name: %}
+      <dt>{{ label }}</dt>
+      <dd>{{ value }}</dd>
     {% endif %}
     {% endfor %}
   </dl>
