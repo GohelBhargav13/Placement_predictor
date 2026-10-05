@@ -73,5 +73,10 @@ def predict():
 def result():
     return render_template("result.html", placed=1, percent=80)
 
+@app.route("/about")
+def about():
+    model_info = joblib.load("model_info.pkl")
+    return render_template("model_accuracy.html", model=model_info)
+
 if __name__ == "__main__":  
     app.run(port=int(os.getenv("PORT", 5000)))

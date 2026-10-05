@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Model Accuracy</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #172554;
+        }
+
+        h2 {
+            color: #1d4ed8;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .features {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background: #e8f0ff;
+            padding: 8px 14px;
+            border-radius: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h1>Model Information</h1>
+        <p>
+            This page shows the performance and configuration
+            of the Student Placement Prediction model.
+        </p>
+
+    </div>
+
+
+    <!-- MODEL DETAILS -->
+
+    <div class="card">
+
+        <h2>Model Details</h2>
+
+        <div class="metric">
+            <span>Algorithm</span>
+            <span class="value">
+                {{ model.algorithm }}
+            </span>
+        </div>
+
+        <div class="metric">
+            <span>Training Records</span>
+            <span class="value">
+                {{ model.train_size }}
+            </span>
+        </div>
+
+        <div class="metric">
+            <span>Testing Records</span>
+            <span class="value">
+                {{ model.test_size }}
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- PERFORMANCE -->
+
+    <div class="card">
+
+        <h2>Model Performance</h2>
+
+        <div class="metric">
+            <span>Accuracy</span>
+            <span class="value">
+                {{ model.accuracy }}%
+            </span>
+        </div>
+
+        <div class="metric">
+            <span>Precision</span>
+            <span class="value">
+                {{ model.precision }}%
+            </span>
+        </div>
+
+        <div class="metric">
+            <span>Recall</span>
+            <span class="value">
+                {{ model.recall }}%
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="card">
+
+        <h2>Features Used by Model</h2>
+
+        <div class="features">
+
+            {% for feature in model.features %}
+
+                <span class="feature">
+                    {{ feature }}
+                </span>
+
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <a href="/">
+        ← Back to Prediction
+    </a>
+</div>
+</body>
+</html>

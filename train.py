@@ -11,9 +11,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, confu
 FEATURES = ["cgpa", "backlogs", "projects", "internships", "skills"]
 
 # 1. Load data (real CSV if present, otherwise demo data for testing)
-print(os.path.exists("../placement_dataset/placement.csv"))
-if os.path.exists("../placement_dataset/placement.csv"):
-    df = pd.read_csv("../placement_dataset/placement.csv")
+print(os.path.exists("./placement_dataset/placement.csv"))
+if os.path.exists("./placement_dataset/placement.csv"):
+    df = pd.read_csv("./placement_dataset/placement.csv")
 
 X = df[FEATURES]
 y = df["placed"]  # 1 = placed, 0 = not placed
@@ -28,13 +28,31 @@ model.fit(X_train, y_train)
 
 # 4. Evaluate on the unseen 20%
 pred = model.predict(X_test)
-print("Accuracy :", round(accuracy_score(y_test, pred), 2))
-print("Precision:", round(precision_score(y_test, pred), 2))
-print("Recall   :", round(recall_score(y_test, pred), 2))
+
+# compute accuracy, precision, recall
+accuracy = accuracy_score(y_test, pred)
+precision = precision_score(y_test, pred)
+recall = recall_score(y_test, pred)
+
+
+# Save model information for Flask/Jinja
+model_info = {
+    "algorithm": "Logistic Regression",
+    "features": FEATURES,
+    "train_size": len(X_train),
+    "test_size": len(X_test),
+    "accuracy": round(accuracy * 100, 2),
+    "precision": round(precision * 100, 2),
+    "recall": round(recall * 100, 2)
+}
 
 # 5. Save the model for the Flask app
 joblib.dump(model, "model.pkl")
 print("Saved model.pkl")
+
+# save the information of the model
+joblib.dump(model_info, "model_info.pkl")
+print("Model information saved model_info.pkl")
 
 # 6. predict the for the particular person
 student = pd.DataFrame([{
